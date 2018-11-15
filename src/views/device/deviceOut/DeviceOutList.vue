@@ -16,7 +16,7 @@
     </el-row>
     <el-table v-loading="loading" :data="list" style="width: 100%" @row-click="clickRow" border stripe ref="moviesTable">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="deviceNum" label="设备编号" align="center"></el-table-column>
+      <el-table-column width="130px" prop="deviceNum" label="设备编号" align="center"></el-table-column>
       <el-table-column prop="deviceName" label="设备名称" align="center"></el-table-column>
       <el-table-column prop="ownerPhone" label="所有者账号" align="center"></el-table-column>
       <el-table-column width="80" prop="userCount" label="用户数量" align="center"></el-table-column>
@@ -28,8 +28,8 @@
           <el-tag v-else type="danger">停用</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="updateTime" label="更新日期" align="center"></el-table-column>
-      <el-table-column prop="createTime" label="出厂日期" align="center"></el-table-column>
+      <el-table-column width="170px" prop="updateTime" label="更新日期" align="center"></el-table-column>
+      <el-table-column width="170px" prop="createTime" label="出厂日期" align="center"></el-table-column>
       <el-table-column width="150px" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row.deviceNum,scope.row.status)">编辑</el-button>

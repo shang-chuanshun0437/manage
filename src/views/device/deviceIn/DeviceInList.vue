@@ -23,7 +23,7 @@
       <el-table-column prop="version" label="硬件版本" align="center"></el-table-column>
       <el-table-column prop="userPhone" label="入库者手机号" align="center"></el-table-column>
       <el-table-column prop="userName" label="入库者名称" align="center"></el-table-column>
-      <el-table-column prop="createTime" label="入库时间" align="center"></el-table-column>
+      <el-table-column width="180" prop="createTime" label="入库时间" align="center"></el-table-column>
       <el-table-column width="270" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row.deviceNum)">编辑</el-button>

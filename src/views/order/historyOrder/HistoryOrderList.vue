@@ -22,8 +22,8 @@
       <el-table-column width="150px" prop="buyerAddress" label="收货地址" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressName" label="快递公司" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressId" label="快递单号" align="center"></el-table-column>
-      <el-table-column width="150px" prop="createTime" label="创建日期" align="center"></el-table-column>
-      <el-table-column width="150px" prop="updateTime" label="签收日期" align="center"></el-table-column>
+      <el-table-column width="170px" prop="createTime" label="创建日期" align="center"></el-table-column>
+      <el-table-column width="170px" prop="updateTime" label="签收日期" align="center"></el-table-column>
       <el-table-column width="150px" prop="remark" label="备注" align="center"></el-table-column>
       <el-table-column width="100" label="操作" align="center">
         <template slot-scope="scope">

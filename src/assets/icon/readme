@@ -1,3 +1,5 @@
+需要在iconfont.css中加入：
+
 [class^="el-icon-ali"],
 [class*=" el-icon-ali"]
 /*这里有空格*/

@@ -30,3 +30,6 @@ export const QUERY_ALL_USER_URL = "/user/query/allUser"; //查询用户列表
 
 //短信统计
 export const VERIFY_CODE_URL = "/verifyCode/query/list"; //查询短信记录
+
+//接口耗时统计
+export const INTERFACE_ACCESS = "/interface/access/queryList"; //接口耗时统计

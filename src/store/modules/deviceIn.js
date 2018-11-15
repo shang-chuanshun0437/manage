@@ -27,7 +27,7 @@ const mutations = {
         if (param.count === 0) {
             state.list = null;
         } else {
-            state.list = [].concat(param.getDeviceInListResponses);
+            state.list = [].concat(param.deviceIns);
         }
 
         console.log(state.total);

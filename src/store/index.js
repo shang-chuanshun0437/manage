@@ -8,6 +8,7 @@ import orderSell from "./modules/orderSell";
 import user from "./modules/user";
 import top from "./modules/top";
 import verifyCode from "./modules/verifyCode";
+import interfaceAccess from "./modules/interfaceAccess";
 
 import getters from "./getters";
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ export default new Vuex.Store({
       top,
       user,
       verifyCode,
+      interfaceAccess,
     },
     getters
 });

@@ -14,6 +14,8 @@ import OtherOrderList from '../views/order/otherOrder/OtherOrderList'
 import Account from '../views/account/Account'
 
 import VerifyCode from '../views/verifyCode/VerifyCode'
+import InterfaceAccess from '../views/interface/InterfaceAccess'
+
 // 懒加载方式，当路由被访问的时候才加载对应组件
 //const Login = resolve => require(['@/components/Login'], resolve)
 
@@ -67,6 +69,15 @@ let router = new Router({
         redirect: '/verify/code/list',
         children: [
           { path: '/verify/code/list', component: VerifyCode, name: 'verifyCode' },
+        ]
+      },
+      {
+        path: '/interface',
+        name: 'interface',
+        component: Home,
+        redirect: '/interface/access/list',
+        children: [
+          { path: '/interface/access/list', component: InterfaceAccess, name: 'interfaceAccess' },
         ]
       },
         {

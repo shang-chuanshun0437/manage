@@ -9,7 +9,8 @@
                background-color="#eee" text-color="#000" active-text-color="#6495ED">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-goods
+"></i>
               <span>仓库管理</span>
             </template>
             <el-menu-item index="/device/in">入库设备</el-menu-item>
@@ -17,7 +18,7 @@
           </el-submenu>
           <el-submenu index="6">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-ali-orderedlist"></i>
               <span>订单管理</span>
             </template>
             <el-menu-item index="/device/order/newOrder">发货订单</el-menu-item>
@@ -25,25 +26,25 @@
             <el-menu-item index="/device/order/otherOrder">其它订单</el-menu-item>
           </el-submenu>
           <el-menu-item index="/all/user/list">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-ali-LC_icon_user_group_add"></i>
             <span slot="title">用户管理</span>
           </el-menu-item>
           <el-menu-item index="/verify/code/list">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-ali-navicon-dxgl"></i>
             <span slot="title">短信统计</span>
           </el-menu-item>
           <el-menu-item index="28">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-ali-doorhandle"></i>
             <span slot="title">开门记录</span>
           </el-menu-item>
           <el-submenu index="5">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-setting"></i>
               <span>系统管理</span>
             </template>
             <el-menu-item index="5-4-1">角色管理</el-menu-item>
             <el-menu-item index="5-4-2">管理员</el-menu-item>
-            <el-menu-item index="5-4-4">接口访问统计</el-menu-item>
+            <el-menu-item index="/interface/access/list">接口访问统计</el-menu-item>
           </el-submenu>
       </el-menu>
     </div>

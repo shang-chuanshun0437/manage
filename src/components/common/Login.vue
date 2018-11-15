@@ -62,7 +62,7 @@
                 this.$store.dispatch("login/login",res);
                 //路由跳转
                 this.$store.dispatch("top/hide",true);
-                this.$router.push({path: '/summary'});
+                this.$router.push({path: '/'});
               }
             })
             .catch(err => {

@@ -16,18 +16,18 @@ const state = {
 const actions = {
     list({ commit }, param) {
         return new Promise((resolve, reject) => {
-            commit(types.DEVICE_OUT_LIST, param);
+            commit(types.INTERFACE_ACCESS, param);
         });
     },
 };
 const mutations = {
-    [types.DEVICE_OUT_LIST](state, param) {
+    [types.INTERFACE_ACCESS](state, param) {
         console.log(param);
         state.total = param.count;
         if (param.count === 0) {
             state.list = null;
         } else {
-            state.list = [].concat(param.deviceOuts);
+            state.list = [].concat(param.interfaceAccesses);
         }
 
         console.log(state.total);

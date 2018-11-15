@@ -25,3 +25,6 @@ export const USER_LIST = "USER_LIST";
 
 //短信记录
 export const VERIFY_LIST = "VERIFY_LIST";
+
+//接口访问
+export const INTERFACE_ACCESS = "INTERFACE_ACCESS";
