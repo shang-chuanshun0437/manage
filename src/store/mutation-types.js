@@ -28,3 +28,9 @@ export const VERIFY_LIST = "VERIFY_LIST";
 
 //接口访问
 export const INTERFACE_ACCESS = "INTERFACE_ACCESS";
+
+//开门记录
+export const OPEN_HISTORY = "OPEN_HISTORY";
+
+//角色
+export const ROLE_LIST = "ROLE_LIST";

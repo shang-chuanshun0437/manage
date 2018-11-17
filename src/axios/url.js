@@ -33,3 +33,11 @@ export const VERIFY_CODE_URL = "/verifyCode/query/list"; //查询短信记录
 
 //接口耗时统计
 export const INTERFACE_ACCESS = "/interface/access/queryList"; //接口耗时统计
+
+//开门历史记录
+export const OPEN_HISTORY = "/open/door/history/query/list"; //开门历史记录
+
+//角色列表
+export const ROLE_LIST = "/role/queryList"; //角色列表
+export const ROLE_ADD = "/role/addRole"; //条件角色
+export const ROLE_UPDATE = "/role/updateRole"; //条件角色

@@ -33,7 +33,7 @@
             <i class="el-icon-ali-navicon-dxgl"></i>
             <span slot="title">短信统计</span>
           </el-menu-item>
-          <el-menu-item index="28">
+          <el-menu-item index="/open/door/history/list">
             <i class="el-icon-ali-doorhandle"></i>
             <span slot="title">开门记录</span>
           </el-menu-item>
@@ -42,7 +42,7 @@
               <i class="el-icon-setting"></i>
               <span>系统管理</span>
             </template>
-            <el-menu-item index="5-4-1">角色管理</el-menu-item>
+            <el-menu-item index="/role/list">角色管理</el-menu-item>
             <el-menu-item index="5-4-2">管理员</el-menu-item>
             <el-menu-item index="/interface/access/list">接口访问统计</el-menu-item>
           </el-submenu>
