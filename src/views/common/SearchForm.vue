@@ -8,11 +8,11 @@
 		<el-form :model="formInline" ref="formInline" :inline="true" class="demo-form-inline" >
 			<el-form-item v-for="(item,index) in searchData" :key="index" :label="item.name" :prop="item.key" :rules="item.rules">
 				<el-input style="width:132px" v-if="item.type==='input'" v-model="formInline[item.key]" :placeholder="item.placeholder"></el-input>
-				<el-date-picker v-if="item.type==='date'" v-model="formInline[item.key]" type="datetime" :placeholder="item.placeholder" align="right" :picker-options="pickerOptions">
+				<el-date-picker style="width:192px" v-if="item.type==='date'" v-model="formInline[item.key]" type="datetime" :placeholder="item.placeholder" align="right" :picker-options="pickerOptions" value-format="yyyy-MM-dd HH:mm:ss">
 				</el-date-picker>
 				<el-date-picker v-if="item.type==='datetimerange'" v-model="formInline[item.key]" type='daterange' range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
 				</el-date-picker>
-				<el-select v-if="item.type==='select'" v-model="formInline[item.key]" :placeholder="item.placeholder">
+				<el-select style="width:132px" v-if="item.type==='select'" v-model="formInline[item.key]" :placeholder="item.placeholder">
 					<el-option v-for="(item1,index1) in item.options" :key="index1" :label="item1" :value="item1">
 					</el-option>
 				</el-select>

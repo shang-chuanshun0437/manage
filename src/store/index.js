@@ -11,6 +11,7 @@ import verifyCode from "./modules/verifyCode";
 import interfaceAccess from "./modules/interfaceAccess";
 import openHistory from "./modules/openHistory";
 import role from "./modules/role";
+import userRole from "./modules/userRole";
 
 import getters from "./getters";
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ export default new Vuex.Store({
       interfaceAccess,
       openHistory,
       role,
+      userRole,
     },
     getters
 });

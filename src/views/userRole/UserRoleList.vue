@@ -6,34 +6,28 @@
 <template>
   <div >
     <div class="panel-heading">
-      <span  class="panel-text">角色列表</span>
+      <span  class="panel-text">管理员列表</span>
     </div>
     <el-row style="top:5px">
       <el-col :span="20">
         <SearchForm :searchData="searchData" @handleSubmit="handleSearch"></SearchForm>
       </el-col>
       <el-col :span="3" :offset="1" align="center">
-        <el-button type="primary" icon="el-icon-plus" @click="addRole()">添加角色</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="addRole()">添加管理员</el-button>
       </el-col>
     </el-row>
     <el-table v-loading="loading" :data="list" style="width: 100%" @row-click="clickRow" border stripe ref="moviesTable">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="角色ID" align="center"></el-table-column>
+      <el-table-column prop="id" label="管理员ID" align="center"></el-table-column>
+      <el-table-column prop="userPhone" label="用户" align="center"></el-table-column>
+      <el-table-column prop="userName" label="用户名称" align="center"></el-table-column>
       <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
       <el-table-column prop="roleDesc" label="角色描述" align="center"></el-table-column>
-      <el-table-column width="90px" prop="status" label="角色状态" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.status===1" type="success">启用</el-tag>
-          <el-tag v-else type="danger">停用</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column width="270" label="操作" align="center">
+      <el-table-column width="180" prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column width="180" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id,scope.row.roleName)">删除</el-button>
           <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-          <el-button size="mini" type="danger" v-if="scope.row.status===1" @click="enableDevice(scope.row.id,2)">停用</el-button>
-          <el-button size="mini" type="primary" v-if="scope.row.status===2" @click="enableDevice(scope.row.id,1)">启用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,17 +36,12 @@
       </el-pagination>
     </el-row>
 
-    <AddRole :show.sync="addShow" ></AddRole>
-    <EditRole :show.sync="editShow" :id.sync="id"></EditRole>
   </div>
 
 </template>
 
 <script>
 import SearchForm from "../common/SearchForm";
-import AddRole from "./AddRole";
-import EditRole from "./EditRole";
-
 import { mapState } from "vuex";
 import * as API from "../../axios/api";
 import * as URL from "../../axios/url";
@@ -68,8 +57,6 @@ const searchData = [
 export default {
   components: {
     SearchForm,
-    AddRole,
-    EditRole
   },
   computed: {
     ...mapState("role", {

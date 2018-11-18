@@ -34,3 +34,6 @@ export const OPEN_HISTORY = "OPEN_HISTORY";
 
 //角色
 export const ROLE_LIST = "ROLE_LIST";
+
+//管理员角色
+export const USER_ROLE_LIST = "USER_ROLE_LIST";

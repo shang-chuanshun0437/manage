@@ -9,8 +9,9 @@
       <span  class="panel-text">接口访问统计</span>
     </div>
     <el-row style="top:5px">
-      <el-col :span="20">
-        <SearchForm :searchData="searchData" @handleSubmit="handleSearch"></SearchForm>
+      <el-col :span="24">
+        <SearchForm :searchData="searchData" ref="searchBox" @handleSubmit="handleSearch" style="display:inline-block"></SearchForm>
+        <el-button class="clearQuery" @click="clearQuery">置空</el-button>
       </el-col>
 
     </el-row>
@@ -47,13 +48,42 @@ import { mapState } from "vuex";
 import * as API from "../../axios/api";
 import * as URL from "../../axios/url";
 const searchData = [
-
   {
-      name: "用户手机号",
-      type: "input",
-      placeholder: "请输入用户手机号",
-      key: "userPhone"
-    },
+    name: "接口名称",
+    type: "input",
+    placeholder: "请输入接口名称",
+    key: "interfaceName"
+  },
+  {
+    name: "访问状态",
+    type: "select",
+    key: "status",
+    options: ["成功", "失败"]
+  },
+  {
+    name: "开始时间",
+    type: "date",
+    placeholder: "请选择开始时间",
+    key: "startTime"
+  },
+  {
+    name: "结束时间",
+    type: "date",
+    placeholder: "请选择结束时间",
+    key: "endTime"
+  },
+  {
+    name: "平均耗时",
+    type: "input",
+    placeholder: "请输入平均耗时",
+    key: "averageTime"
+  },
+  {
+    name: "访问次数",
+    type: "input",
+    placeholder: "请输入访问次数",
+    key: "interfaceCount"
+  },
 ];
 export default {
   components: {
@@ -71,7 +101,12 @@ export default {
       currentPage: 1,
       searchData: searchData,
       filters: {
-        userPhone: "",
+        interfaceName: "",
+        status: "",
+        startTime: "",
+        endTime: "",
+        averageTime: "",
+        interfaceCount: "",
       }
     };
   },
@@ -81,11 +116,12 @@ export default {
   },
   methods: {
     refresh() {
-      //debugger
-      console.log('refresh');
       let user = JSON.parse(window.localStorage.getItem('access-user'));
       var param = Object.assign({}, {userPhone: user.userPhone , token: user.token ,
-        needPhone:this.filters.userPhone,currentPage: this.currentPage });
+        interfaceName:this.filters.interfaceName,interfaceCount:this.filters.interfaceCount,
+        startTime:this.filters.startTime,endTime:this.filters.endTime,
+        averageTime:this.filters.averageTime,status:this.filters.status,
+        currentPage: this.currentPage });
 
       //发送查询接口耗时统计请求
       API.POST(URL.INTERFACE_ACCESS, param)
@@ -103,7 +139,18 @@ export default {
     handleSearch(params) {
       console.log(params);
       this.filters=Object.assign({},params);
+      if (this.filters.status == "成功") {
+        this.filters.status = 1;
+      } else if (this.filters.status == "失败") {
+        this.filters.status = 2;
+      }
       this.refresh();
+    },
+    clearQuery() {
+      let params = {};
+      this.filters = Object.assign({},params);
+      this.refresh(params);
+      this.$refs.searchBox.onClear();
     },
     clickRow(row){
       this.$refs.moviesTable.toggleRowSelection(row)
@@ -134,4 +181,10 @@ export default {
     top:1px;
     font-size:16px;
   }
+  .clearQuery{
+     position:absolute;
+     top:63px;
+    left: 330px;
+   }
+
 </style>

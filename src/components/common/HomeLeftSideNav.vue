@@ -9,8 +9,7 @@
                background-color="#eee" text-color="#000" active-text-color="#6495ED">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-goods
-"></i>
+              <i class="el-icon-goods"></i>
               <span>仓库管理</span>
             </template>
             <el-menu-item index="/device/in">入库设备</el-menu-item>
@@ -43,7 +42,7 @@
               <span>系统管理</span>
             </template>
             <el-menu-item index="/role/list">角色管理</el-menu-item>
-            <el-menu-item index="5-4-2">管理员</el-menu-item>
+            <el-menu-item index="/userRole/list">管理员管理</el-menu-item>
             <el-menu-item index="/interface/access/list">接口访问统计</el-menu-item>
           </el-submenu>
       </el-menu>

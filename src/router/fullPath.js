@@ -17,6 +17,7 @@ import VerifyCode from '../views/verifyCode/VerifyCode'
 import InterfaceAccess from '../views/interface/InterfaceAccess'
 import OpenHistory from '../views/openHistory/OpenHistory'
 import Role from '../views/role/Role'
+import UserRoleList from '../views/userRole/UserRoleList'
 
 // 懒加载方式，当路由被访问的时候才加载对应组件
 //const Login = resolve => require(['@/components/Login'], resolve)
@@ -80,6 +81,8 @@ let router = new Router({
         redirect: '/interface/access/list',
         children: [
           { path: '/interface/access/list', component: InterfaceAccess, name: 'interfaceAccess' },
+          { path: '/role/list', component: Role, name: 'role' },
+          { path: '/userRole/list', component: UserRoleList, name: 'userRoleList' },
         ]
       },
       {
@@ -89,15 +92,6 @@ let router = new Router({
         redirect: '/open/door/history/list',
         children: [
           { path: '/open/door/history/list', component: OpenHistory, name: 'openHistory' },
-        ]
-      },
-      {
-        path: '/role',
-        name: 'role',
-        component: Home,
-        redirect: '/role/list',
-        children: [
-          { path: '/role/list', component: Role, name: 'role' },
         ]
       },
         {

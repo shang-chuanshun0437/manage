@@ -39,5 +39,6 @@ export const OPEN_HISTORY = "/open/door/history/query/list"; //开门历史记�
 
 //角色列表
 export const ROLE_LIST = "/role/queryList"; //角色列表
-export const ROLE_ADD = "/role/addRole"; //条件角色
-export const ROLE_UPDATE = "/role/updateRole"; //条件角色
+export const ROLE_ADD = "/role/addRole"; //添加角色
+export const ROLE_UPDATE = "/role/updateRole"; //更新角色
+export const ROLE_DELETE = "/role/deleteRole"; //删除角色
