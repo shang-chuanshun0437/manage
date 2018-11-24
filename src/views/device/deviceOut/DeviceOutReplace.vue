@@ -4,21 +4,25 @@
  */
 
 <template>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label="修改订单">
       <el-form-item  label="设备编号" prop="deviceNum">
         <el-col :span="12">
           <el-input v-model="ruleForm.deviceNum" :disabled="true"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item  label="设备价格" prop="unitPrice">
+
+      <el-form-item  label="退/换货" prop="status">
         <el-col :span="12">
-          <el-input v-model="ruleForm.unitPrice" placeholder="请输入设备价格"></el-input>
+          <el-select v-model="ruleForm.status" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-col>
       </el-form-item>
-      <el-form-item label="订单编号" prop="orderId">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.orderId" placeholder="请输入订单编号"></el-input>
-        </el-col>
       </el-form-item>
       <el-form-item label="买家手机号" prop="buyerPhone">
         <el-col :span="12">
@@ -30,9 +34,9 @@
           <el-input v-model="ruleForm.buyerName" placeholder="请输入买家名称"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="收货地址" prop="buyerAddress">
+      <el-form-item label="发货地址" prop="buyerAddress">
         <el-col :span="12">
-          <el-input v-model="ruleForm.buyerAddress" placeholder="请输入收货地址"></el-input>
+          <el-input v-model="ruleForm.buyerAddress" placeholder="请输入发货地址"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="快递公司" prop="expressName">
@@ -45,19 +49,14 @@
           <el-input v-model="ruleForm.expressId" placeholder="请输入快递单号"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="快递费用" prop="expressId">
+      <el-form-item label="退/换货原因" prop="remark">
         <el-col :span="12">
-          <el-input v-model="ruleForm.postage" placeholder="请输入快递费用"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="备注信息" prop="remark">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.remark" placeholder="请输入备注信息"></el-input>
+          <el-input v-model="ruleForm.remark" placeholder="请输入退/换货原因"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item style="width:60%;">
         <el-button type="primary" style="width:40%;" @click.native.prevent="cancel" >取消</el-button>
-        <el-button type="primary" style="width:40%;" @click.native.prevent="handleEdit" :disabled="confirm">发货</el-button>
+        <el-button type="primary" style="width:40%;" @click.native.prevent="confirmOk" :disabled="confirm">确认</el-button>
       </el-form-item>
     </el-form>
 </template>
@@ -70,25 +69,25 @@ export default {
   data: function() {
     return {
       confirm:true,
+      options: [{
+        value: '5',
+        label: '换货'
+        }, {
+          value: '4',
+          label: '退货'
+        }
+      ],
       ruleForm: {
         deviceNum:"",
-        unitPrice:"",
-        orderId: "",
+        status:"",
         buyerPhone: "",
         buyerName: "",
         buyerAddress: "",
         expressName: "",
         expressId: "",
-        postage:"",
         remark: "",
       },
       rules: {
-        orderId: [
-          { required: true, message: "请输入订单编号", trigger: "blur" }
-        ],
-        unitPrice: [
-          { required: true, message: "请输入设备价格", trigger: "blur" }
-        ],
         buyerPhone: [
           { required: true, message: "请输入买家手机号", trigger: "blur" }
         ],
@@ -104,11 +103,11 @@ export default {
         expressId: [
           { required: true, message: "请输入快递单号", trigger: "blur" }
         ],
-        postage: [
-          { required: true, message: "请输入快递费用", trigger: "blur" }
+        status: [
+          { required: true, message: "请选择退换货", trigger: "blur" }
         ],
         remark: [
-          { required: true, message: "请输入备注信息", trigger: "blur" }
+          { required: true, message: "请输入退/换货原因", trigger: "blur" }
         ],
       }
     };
@@ -116,31 +115,24 @@ export default {
 
   methods: {
     cancel() {
-      this.$router.go(-1);
+      this.$router.push("/device/out");
     },
-    handleEdit() {
-      this.confirm=true;
+    confirmOk() {
+      this.confirm=false;
       let user = JSON.parse(window.localStorage.getItem('access-user'));
-      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token ,orderId: this.ruleForm.orderId ,
-        deviceNum: this.ruleForm.deviceNum ,unitPrice: this.ruleForm.unitPrice,
+      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token , deviceNum: this.ruleForm.deviceNum ,status: this.ruleForm.status,
         buyerPhone: this.ruleForm.buyerPhone, buyerName: this.ruleForm.buyerName ,buyerAddress: this.ruleForm.buyerAddress,
-        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,postage: this.ruleForm.postage,remark: this.ruleForm.remark});
+        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,remark: this.ruleForm.remark});
 
-      //绑定设备
-      API.POST(URL.DEVICE_IN_OUT_URL, param)
+      //更新订单列表
+      API.POST(URL.DEVICE_OUT_REPLACE_URL, param)
         .then(res => {
           if (res.result.retCode === 0) {
-            this.confirm=false;
-            this.$router.push("/device/in");
+            this.$router.push("/device/out");
             this.$message({
-            message: '出库成功',
+            message: '退/换货成功',
             type: 'success'
             });
-          }else
-          {
-            this.confirm=false;
-            this.$message.error('请输入正确的11位设备编号！');
-            console.log(res.result.retCode);
           }
         })
         .catch(err => {
@@ -148,13 +140,11 @@ export default {
           console.log(err);
         });
     },
-    handleClose() {
-      this.$emit("update:show", false);
-    }
+
   },
   beforeUpdate() {
-      if( this.ruleForm.orderId != ''& this.ruleForm.buyerPhone != '' & this.ruleForm.buyerName != ''& this.ruleForm.buyerAddress != '' &
-        this.ruleForm.expressName != ''& this.ruleForm.expressId != '' & this.ruleForm.remark != '')
+      if( this.ruleForm.buyerPhone != '' & this.ruleForm.buyerName != ''& this.ruleForm.buyerAddress != '' &
+        this.ruleForm.expressName != ''& this.ruleForm.expressId != '' & this.ruleForm.remark != '' & this.ruleForm.status != '')
       {
         this.confirm = false;
       }

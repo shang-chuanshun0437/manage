@@ -4,12 +4,17 @@ import Login from '@/components/common/Login'
 import Home from '@/components/Home'
 
 import DeviceInList from '../views/device/deviceIn/DeviceInList'
+import DeviceInOutOf from '../views/device/deviceIn/DeviceInOutOf'
 import DeviceOutList from '../views/device/deviceOut/DeviceOutList'
+import DeviceOutReplace from '../views/device/deviceOut/DeviceOutReplace'
 import UserList from '../views/user/UserList'
 
+import NewOrderEdit from '../views/order/newOrder/NewOrderEdit'
 import NewOrderList from '../views/order/newOrder/NewOrderList'
-import HistoryOrderList from '../views/order/historyOrder/HistoryOrderList'
-import OtherOrderList from '../views/order/otherOrder/OtherOrderList'
+import ReplaceOrderList from '../views/order/replaceOrder/ReplaceOrderList'
+import RepairOrderList from '../views/order/repairOrder/RepairOrderList'
+import RepairOrderOutOf from '../views/order/repairOrder/RepairOrderOutOf'
+import RepairOrderAdd from '../views/order/repairOrder/RepairOrderAdd'
 
 import Account from '../views/account/Account'
 
@@ -41,8 +46,10 @@ let router = new Router({
             component: Home,
             redirect: '/device/in',
             children: [
-                { path: '/device/in', component: DeviceInList, name: 'deviceInList' },
-                { path: '/device/out', component: DeviceOutList, name: 'deviceOutList' }
+              { path: '/device/in', component: DeviceInList, name: 'deviceInList' },
+              { path: '/device/in/deviceOut', component: DeviceInOutOf, name: 'deviceInOutOf' },
+              { path: '/device/out', component: DeviceOutList, name: 'deviceOutList' },
+              { path: '/device/out/replace', component: DeviceOutReplace, name: 'deviceOutReplace' },
             ]
         },
         {
@@ -52,8 +59,11 @@ let router = new Router({
           redirect: '/device/order/newOrder',
           children: [
             { path: '/device/order/newOrder', component: NewOrderList, name: 'newOrderList' },
-            { path: '/device/order/historyOrder', component: HistoryOrderList, name: 'historyOrderList' },
-            { path: '/device/order/otherOrder', component: OtherOrderList, name: 'otherOrderList' },
+            { path: '/device/order/newOrder/edit', component: NewOrderEdit, name: 'newOrderEdit' },
+            { path: '/device/order/replaceOrder', component: ReplaceOrderList, name: 'replaceOrderList' },
+            { path: '/device/order/repairOrderList', component: RepairOrderList, name: 'repairOrderList' },
+            { path: '/device/order/repairOrder/out', component: RepairOrderOutOf, name: 'repairOrderOutOf' },
+            { path: '/device/order/repairOrder/add', component: RepairOrderAdd, name: 'repairOrderAdd' },
           ]
         },
       {

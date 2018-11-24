@@ -27,7 +27,7 @@
       <el-table-column width="270" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row.deviceNum)">编辑</el-button>
-          <el-button size="mini" @click="handleOut(scope.row.deviceNum,scope.row.deviceName)">发货</el-button>
+          <el-button size="mini" @click="handleOut(scope.row.deviceNum)">发货</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row.deviceNum)">删除</el-button>
         </template>
       </el-table-column>
@@ -39,7 +39,6 @@
 
     <AddDeviceIn :show.sync="addShow" ></AddDeviceIn>
     <EditDeviceIn :show.sync="editShow" :deviceNum.sync="editDeviceNum"></EditDeviceIn>
-    <DeviceInOutOf :show.sync="outOfShow" :deviceNum.sync="outOfDeviceNum"></DeviceInOutOf>
   </div>
 
 </template>
@@ -51,7 +50,6 @@ import * as API from "../../../axios/api";
 import * as URL from "../../../axios/url";
 import AddDeviceIn from './AddDeviceIn'
 import EditDeviceIn from './EditDeviceIn'
-import DeviceInOutOf from './DeviceInOutOf'
 const searchData = [
   {
     name: "设备编号",
@@ -71,7 +69,6 @@ export default {
     SearchForm,
     AddDeviceIn,
     EditDeviceIn,
-    DeviceInOutOf
   },
   computed: {
     ...mapState("deviceIn", {
@@ -135,9 +132,9 @@ export default {
       this.editDeviceNum = deviceNum;
       this.editShow = true;
     },
-    handleOut(deviceNum,deviceName) {
-      this.outOfDeviceNum = deviceNum;
-      this.outOfShow = true;
+    handleOut(deviceNum) {
+      this.$router.push({path:"/device/in/deviceOut",query:{deviceNum:deviceNum}});
+      console.log(deviceNum)
     },
     handleDelete(deviceNum) {
       let user = JSON.parse(window.localStorage.getItem('access-user'));

@@ -7,17 +7,7 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
       <el-form-item  label="设备编号" prop="deviceNum">
         <el-col :span="12">
-          <el-input v-model="ruleForm.deviceNum" :disabled="true"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item  label="设备价格" prop="unitPrice">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.unitPrice" placeholder="请输入设备价格"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="订单编号" prop="orderId">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.orderId" placeholder="请输入订单编号"></el-input>
+          <el-input v-model="ruleForm.deviceNum" placeholder="请输入设备编号"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="买家手机号" prop="buyerPhone">
@@ -30,9 +20,9 @@
           <el-input v-model="ruleForm.buyerName" placeholder="请输入买家名称"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="收货地址" prop="buyerAddress">
+      <el-form-item label="发货地址" prop="buyerAddress">
         <el-col :span="12">
-          <el-input v-model="ruleForm.buyerAddress" placeholder="请输入收货地址"></el-input>
+          <el-input v-model="ruleForm.buyerAddress" placeholder="请输入发货地址"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="快递公司" prop="expressName">
@@ -45,19 +35,14 @@
           <el-input v-model="ruleForm.expressId" placeholder="请输入快递单号"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="快递费用" prop="expressId">
+      <el-form-item label="报修原因" prop="remark">
         <el-col :span="12">
-          <el-input v-model="ruleForm.postage" placeholder="请输入快递费用"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="备注信息" prop="remark">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.remark" placeholder="请输入备注信息"></el-input>
+          <el-input v-model="ruleForm.remark" placeholder="请输入报修原因"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item style="width:60%;">
         <el-button type="primary" style="width:40%;" @click.native.prevent="cancel" >取消</el-button>
-        <el-button type="primary" style="width:40%;" @click.native.prevent="handleEdit" :disabled="confirm">发货</el-button>
+        <el-button type="primary" style="width:40%;" @click.native.prevent="handleEdit" :disabled="confirm">新增</el-button>
       </el-form-item>
     </el-form>
 </template>
@@ -72,22 +57,16 @@ export default {
       confirm:true,
       ruleForm: {
         deviceNum:"",
-        unitPrice:"",
-        orderId: "",
         buyerPhone: "",
         buyerName: "",
         buyerAddress: "",
         expressName: "",
         expressId: "",
-        postage:"",
         remark: "",
       },
       rules: {
-        orderId: [
-          { required: true, message: "请输入订单编号", trigger: "blur" }
-        ],
-        unitPrice: [
-          { required: true, message: "请输入设备价格", trigger: "blur" }
+        deviceNum: [
+          { required: true, message: "请输入设备编号", trigger: "blur" }
         ],
         buyerPhone: [
           { required: true, message: "请输入买家手机号", trigger: "blur" }
@@ -104,11 +83,8 @@ export default {
         expressId: [
           { required: true, message: "请输入快递单号", trigger: "blur" }
         ],
-        postage: [
-          { required: true, message: "请输入快递费用", trigger: "blur" }
-        ],
         remark: [
-          { required: true, message: "请输入备注信息", trigger: "blur" }
+          { required: true, message: "请输入报修原因", trigger: "blur" }
         ],
       }
     };
@@ -119,21 +95,19 @@ export default {
       this.$router.go(-1);
     },
     handleEdit() {
-      this.confirm=true;
+      this.confirm=false;
       let user = JSON.parse(window.localStorage.getItem('access-user'));
-      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token ,orderId: this.ruleForm.orderId ,
-        deviceNum: this.ruleForm.deviceNum ,unitPrice: this.ruleForm.unitPrice,
+      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token , deviceNum: this.ruleForm.deviceNum ,
         buyerPhone: this.ruleForm.buyerPhone, buyerName: this.ruleForm.buyerName ,buyerAddress: this.ruleForm.buyerAddress,
-        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,postage: this.ruleForm.postage,remark: this.ruleForm.remark});
+        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,remark: this.ruleForm.remark,status: 6});
 
-      //绑定设备
-      API.POST(URL.DEVICE_IN_OUT_URL, param)
+      //添加报修订单
+      API.POST(URL.ORDER_ADD_URL, param)
         .then(res => {
           if (res.result.retCode === 0) {
-            this.confirm=false;
-            this.$router.push("/device/in");
+            this.$router.go(-1);
             this.$message({
-            message: '出库成功',
+            message: '添加成功',
             type: 'success'
             });
           }else
@@ -148,9 +122,6 @@ export default {
           console.log(err);
         });
     },
-    handleClose() {
-      this.$emit("update:show", false);
-    }
   },
   beforeUpdate() {
       if( this.ruleForm.orderId != ''& this.ruleForm.buyerPhone != '' & this.ruleForm.buyerName != ''& this.ruleForm.buyerAddress != '' &
@@ -163,7 +134,6 @@ export default {
       }
   },
   created() {
-    this.ruleForm.deviceNum = this.$route.query.deviceNum;
   }
 };
 </script>

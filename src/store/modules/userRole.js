@@ -27,7 +27,7 @@ const mutations = {
         if (param.count === 0) {
             state.list = null;
         } else {
-            state.list = [].concat(param.roles);
+            state.list = [].concat(param.roleUsers);
         }
     },
 };

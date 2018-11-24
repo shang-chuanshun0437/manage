@@ -6,7 +6,7 @@
 <template>
   <div >
     <div class="panel-heading">
-      <span  class="panel-text">入库列表</span>
+      <span  class="panel-text">发货订单</span>
     </div>
     <el-row style="top:5px">
       <el-col :span="20">
@@ -15,21 +15,22 @@
     </el-row>
     <el-table v-loading="loading" :data="list" style="width: 100%" @row-click="clickRow" border stripe ref="moviesTable">
       <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column width="100px" prop="id" label="ID" align="center"></el-table-column>
       <el-table-column width="150px" prop="orderId" label="订单编号" align="center"></el-table-column>
       <el-table-column width="150px" prop="deviceNum" label="设备编号" align="center"></el-table-column>
+      <el-table-column width="100px" prop="unitPrice" label="设备价格" align="center"></el-table-column>
       <el-table-column width="150px" prop="buyerPhone" label="买家手机号" align="center"></el-table-column>
       <el-table-column width="150px" prop="buyerName" label="买家名称" align="center"></el-table-column>
       <el-table-column width="150px" prop="buyerAddress" label="收货地址" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressName" label="快递公司" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressId" label="快递单号" align="center"></el-table-column>
+      <el-table-column width="100px" prop="postage" label="快递费用" align="center"></el-table-column>
       <el-table-column width="170px" prop="createTime" label="创建日期" align="center"></el-table-column>
       <el-table-column width="170px" prop="updateTime" label="更新日期" align="center"></el-table-column>
       <el-table-column width="150px" prop="remark" label="备注" align="center"></el-table-column>
-      <el-table-column width="250" label="操作" align="center">
+      <el-table-column width="100" label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row.deviceNum)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row.deviceNum)">删除</el-button>
-          <el-button size="mini" @click="sign(scope.row.expressId)">签收</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -157,9 +158,8 @@ export default {
         });
 
     },
-    handleEdit(deviceNum) {
-      this.editDeviceNum = deviceNum;
-      this.editShow = true;
+    handleEdit(id) {
+      this.$router.push({path:"/device/order/newOrder/edit",query:{id:id}});
     },
     update(param) {
 

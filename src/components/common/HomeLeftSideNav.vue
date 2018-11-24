@@ -21,8 +21,8 @@
               <span>订单管理</span>
             </template>
             <el-menu-item index="/device/order/newOrder">发货订单</el-menu-item>
-            <el-menu-item index="/device/order/historyOrder">签收订单</el-menu-item>
-            <el-menu-item index="/device/order/otherOrder">其它订单</el-menu-item>
+            <el-menu-item index="/device/order/replaceOrder">退/换货订单</el-menu-item>
+            <el-menu-item index="/device/order/repairOrderList">报修订单</el-menu-item>
           </el-submenu>
           <el-menu-item index="/all/user/list">
             <i class="el-icon-ali-LC_icon_user_group_add"></i>

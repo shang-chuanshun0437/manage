@@ -14,7 +14,7 @@
         <div class = "weiyi-top-dropdown">
             <span style = "color:#ffffff;font-size: 15px;">
               hi &nbsp;&nbsp;{{userPhone}} &nbsp; | &nbsp;
-              <el-button type="text" style = "color:#ffffff;font-size: 15px;" >退出</el-button>
+              <el-button type="text" style = "color:#ffffff;font-size: 15px;"  @click.native.prevent="logout" >退出</el-button>
             </span>
         </div>
         </el-col>

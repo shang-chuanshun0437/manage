@@ -20,10 +20,13 @@ export const DEVICE_IN_OUT_URL = "/device/deviceIn/outOfDevice"; //设备出库
 //出库设备
 export const DEVICE_OUT_LIST_URL = "/device/queryDeviceList"; //查询出库设备列表
 export const DEVICE_OUT_UPDATE_URL = "/device/updateDevice"; //修改出库设备
+export const DEVICE_OUT_REPLACE_URL = "/device/replaceDevice"; //退换货
 
 //订单
 export const ORDER_SELL_LIST_URL = "/order/query/orderSell/list"; //查询订单列表
 export const ORDER_SELL_UPDATE_URL = "/order/modify/orderSell"; //更新订单
+export const ORDER_REPLACE_URL = "/order/query/replace/list"; //退换货订单
+export const ORDER_ADD_URL = "/order/add/orderSell"; //添加订单
 
 //用户管理
 export const QUERY_ALL_USER_URL = "/user/query/allUser"; //查询用户列表
@@ -42,3 +45,8 @@ export const ROLE_LIST = "/role/queryList"; //角色列表
 export const ROLE_ADD = "/role/addRole"; //添加角色
 export const ROLE_UPDATE = "/role/updateRole"; //更新角色
 export const ROLE_DELETE = "/role/deleteRole"; //删除角色
+
+//用户角色
+export const ROLE_USER_LIST = "/role/user/queryRoleUser"; //用户角色列表
+export const ROLE_USER_ADD_LIST = "/role/user/addRole"; //添加管理员
+export const ROLE_USER_DELETE = "/role/user/deleteRoleUser"; //删除管理员

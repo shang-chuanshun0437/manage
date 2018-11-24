@@ -6,7 +6,7 @@
 <template>
   <div >
     <div class="panel-heading">
-      <span  class="panel-text">入库列表</span>
+      <span  class="panel-text">退/换货订单</span>
     </div>
     <el-row style="top:5px">
       <el-col :span="20">
@@ -15,19 +15,24 @@
     </el-row>
     <el-table v-loading="loading" :data="list" style="width: 100%" @row-click="clickRow" border stripe ref="moviesTable">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column width="150px" prop="orderId" label="订单编号" align="center"></el-table-column>
+      <el-table-column width="100px" prop="id" label="ID" align="center"></el-table-column>
       <el-table-column width="150px" prop="deviceNum" label="设备编号" align="center"></el-table-column>
+      <el-table-column width="90px" prop="status" label="退/换" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status===4" type="success">退货</el-tag>
+          <el-tag v-else type="danger">换货</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column width="150px" prop="buyerPhone" label="买家手机号" align="center"></el-table-column>
       <el-table-column width="150px" prop="buyerName" label="买家名称" align="center"></el-table-column>
-      <el-table-column width="150px" prop="buyerAddress" label="收货地址" align="center"></el-table-column>
+      <el-table-column width="150px" prop="buyerAddress" label="发货地址" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressName" label="快递公司" align="center"></el-table-column>
       <el-table-column width="150px" prop="expressId" label="快递单号" align="center"></el-table-column>
-      <el-table-column width="150px" prop="createTime" label="创建日期" align="center"></el-table-column>
-      <el-table-column width="150px" prop="updateTime" label="签收日期" align="center"></el-table-column>
+      <el-table-column width="170px" prop="createTime" label="创建日期" align="center"></el-table-column>
       <el-table-column width="150px" prop="remark" label="备注" align="center"></el-table-column>
       <el-table-column width="100" label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="sign(scope.row.expressId)">退换货</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,9 +40,7 @@
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="10" layout="total, prev, pager, next,jumper" :total="total">
       </el-pagination>
     </el-row>
-
   </div>
-
 </template>
 
 <script>
@@ -104,6 +107,7 @@ export default {
         orderId: "",
         expressName: "",
         buyerPhone: "",
+        status:"",
       }
     };
   },
@@ -115,19 +119,33 @@ export default {
       console.log('refresh');
       let user = JSON.parse(window.localStorage.getItem('access-user'));
       var param = Object.assign({}, {userPhone: user.userPhone , token: user.token ,
-      deviceNum: this.filters.deviceNum ,currentPage: this.currentPage, status: 3 });
+      deviceNum: this.filters.deviceNum ,currentPage: this.currentPage, status: this.filters.status });
 
-      //发送查询订单列表请求
-      API.POST(URL.ORDER_SELL_LIST_URL, param)
-        .then(res => {
-          if (res.result.retCode === 0) {
-            this.loading = false;
-            this.$store.dispatch("orderSell/list",res);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (this.filters.status ===""){
+        //发送查询订单列表请求
+        API.POST(URL.ORDER_REPLACE_URL, param)
+          .then(res => {
+            if (res.result.retCode === 0) {
+              this.loading = false;
+              this.$store.dispatch("orderSell/list",res);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }else{
+        //发送查询订单列表请求
+        API.POST(URL.ORDER_SELL_LIST_URL, param)
+          .then(res => {
+            if (res.result.retCode === 0) {
+              this.loading = false;
+              this.$store.dispatch("orderSell/list",res);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
 
     handleSearch(params) {
@@ -155,9 +173,8 @@ export default {
         });
 
     },
-    handleEdit(deviceNum) {
-      this.editDeviceNum = deviceNum;
-      this.editShow = true;
+    handleEdit(id) {
+      this.$router.push({path:"/device/order/newOrder/edit",query:{id:id}});
     },
     update(param) {
 

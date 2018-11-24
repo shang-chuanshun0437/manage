@@ -30,11 +30,12 @@
       </el-table-column>
       <el-table-column width="170px" prop="updateTime" label="更新日期" align="center"></el-table-column>
       <el-table-column width="170px" prop="createTime" label="出厂日期" align="center"></el-table-column>
-      <el-table-column width="150px" label="操作" align="center">
+      <el-table-column width="250px" label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row.deviceNum,scope.row.status)">编辑</el-button>
           <el-button size="mini" type="danger" v-if="scope.row.status===0" @click="enableDevice(scope.row.deviceNum,scope.row.status)">停用</el-button>
           <el-button size="mini" type="primary" v-if="scope.row.status===1" @click="enableDevice(scope.row.deviceNum,scope.row.status)">启用</el-button>
+          <el-button size="mini" @click="handleReplace(scope.row.deviceNum)">退/换</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -216,6 +217,9 @@ export default {
         this.editDeviceNum = deviceNum;
         this.editShow = true;
       }
+    },
+    handleReplace(deviceNum){
+      this.$router.push({path:"/device/out/replace",query:{deviceNum:deviceNum}});
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

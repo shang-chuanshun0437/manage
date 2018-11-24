@@ -5,19 +5,14 @@
 
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
+      <el-form-item  label="ID" prop="id">
+        <el-col :span="12">
+          <el-input v-model="ruleForm.id" :disabled="true"></el-input>
+        </el-col>
+      </el-form-item>
       <el-form-item  label="设备编号" prop="deviceNum">
         <el-col :span="12">
           <el-input v-model="ruleForm.deviceNum" :disabled="true"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item  label="设备价格" prop="unitPrice">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.unitPrice" placeholder="请输入设备价格"></el-input>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="订单编号" prop="orderId">
-        <el-col :span="12">
-          <el-input v-model="ruleForm.orderId" placeholder="请输入订单编号"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="买家手机号" prop="buyerPhone">
@@ -71,24 +66,17 @@ export default {
     return {
       confirm:true,
       ruleForm: {
+        id:"",
         deviceNum:"",
-        unitPrice:"",
-        orderId: "",
         buyerPhone: "",
         buyerName: "",
         buyerAddress: "",
         expressName: "",
         expressId: "",
-        postage:"",
         remark: "",
+        postage:"",
       },
       rules: {
-        orderId: [
-          { required: true, message: "请输入订单编号", trigger: "blur" }
-        ],
-        unitPrice: [
-          { required: true, message: "请输入设备价格", trigger: "blur" }
-        ],
         buyerPhone: [
           { required: true, message: "请输入买家手机号", trigger: "blur" }
         ],
@@ -119,33 +107,25 @@ export default {
       this.$router.go(-1);
     },
     handleEdit() {
-      this.confirm=true;
+      this.confirm=false;
       let user = JSON.parse(window.localStorage.getItem('access-user'));
-      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token ,orderId: this.ruleForm.orderId ,
-        deviceNum: this.ruleForm.deviceNum ,unitPrice: this.ruleForm.unitPrice,
-        buyerPhone: this.ruleForm.buyerPhone, buyerName: this.ruleForm.buyerName ,buyerAddress: this.ruleForm.buyerAddress,
-        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,postage: this.ruleForm.postage,remark: this.ruleForm.remark});
+      var param = Object.assign({}, {userPhone: user.userPhone ,token: user.token , id: this.ruleForm.id,deviceNum: this.ruleForm.deviceNum ,
+        unitPrice: 0,buyerPhone: this.ruleForm.buyerPhone, buyerName: this.ruleForm.buyerName ,buyerAddress: this.ruleForm.buyerAddress,
+        expressName: this.ruleForm.expressName ,expressId: this.ruleForm.expressId,postage: this.ruleForm.postage,remark: this.ruleForm.remark,status: 2});
 
       //绑定设备
-      API.POST(URL.DEVICE_IN_OUT_URL, param)
+      API.POST(URL.ORDER_SELL_UPDATE_URL, param)
         .then(res => {
           if (res.result.retCode === 0) {
-            this.confirm=false;
-            this.$router.push("/device/in");
+            this.$router.go(-1);
             this.$message({
-            message: '出库成功',
+            message: '发货成功',
             type: 'success'
             });
-          }else
-          {
-            this.confirm=false;
-            this.$message.error('请输入正确的11位设备编号！');
-            console.log(res.result.retCode);
           }
         })
         .catch(err => {
           this.confirm=false;
-          console.log(err);
         });
     },
     handleClose() {
@@ -153,8 +133,8 @@ export default {
     }
   },
   beforeUpdate() {
-      if( this.ruleForm.orderId != ''& this.ruleForm.buyerPhone != '' & this.ruleForm.buyerName != ''& this.ruleForm.buyerAddress != '' &
-        this.ruleForm.expressName != ''& this.ruleForm.expressId != '' & this.ruleForm.remark != '')
+      if( this.ruleForm.buyerPhone != '' & this.ruleForm.buyerName != ''& this.ruleForm.buyerAddress != '' &
+        this.ruleForm.expressName != ''& this.ruleForm.expressId != '' & this.ruleForm.remark != '' & this.ruleForm.postage != '')
       {
         this.confirm = false;
       }
@@ -163,7 +143,12 @@ export default {
       }
   },
   created() {
+    this.ruleForm.id = this.$route.query.id;
     this.ruleForm.deviceNum = this.$route.query.deviceNum;
+    this.ruleForm.buyerPhone = this.$route.query.buyerPhone;
+    this.ruleForm.buyerName = this.$route.query.buyerName;
+    this.ruleForm.buyerAddress = this.$route.query.buyerAddress;
+    this.ruleForm.remark = this.$route.query.remark;
   }
 };
 </script>
